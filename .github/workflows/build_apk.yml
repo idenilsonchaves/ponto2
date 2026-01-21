@@ -30,6 +30,17 @@ jobs:
         flutter-version: '3.19.0'
         channel: 'stable'
 
+    - name: Clean Project
+      run: |
+        rm -f dist.rar
+        rm -f ponto/Ponto2.exe
+        rm -rf mobile_build
+        rm -rf build
+
+    - name: Accept Android Licenses
+      run: |
+        yes | flutter doctor --android-licenses
+
     - name: Build APK
       run: |
         flet build apk --project "Ponto2" --product "Ponto Eletronico" --org "com.ponto.app" --module-name main_mobile -v
