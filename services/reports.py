@@ -1,7 +1,19 @@
 import calendar
 import json
+import sys
+import os
 from datetime import date, datetime, timedelta
 from typing import List, Dict, Any, Optional
+
+# Adicionar diretório raiz ao path se necessário
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(current_dir))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+# Tentar adicionar o diretório pai também (caso seja executado de services/)
+parent_dir = os.path.dirname(current_dir)
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
 
 from database.operations import db_manager
 from models.dto import DiaTrabalhoDTO, RelatorioMensalDTO
