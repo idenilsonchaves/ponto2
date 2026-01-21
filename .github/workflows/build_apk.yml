@@ -43,7 +43,7 @@ jobs:
 
     - name: Build APK
       run: |
-        flet build apk --project "Ponto2" --product "Ponto Eletronico" --org "com.ponto.app" --module-name main_mobile -v
+        flet build apk -v
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
