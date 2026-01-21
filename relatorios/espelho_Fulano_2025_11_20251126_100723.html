@@ -1,0 +1,73 @@
+
+        <html>
+        <head>
+        <meta charset='utf-8'>
+        
+        <style>
+        @page { size: A4 landscape; margin: 8mm; }
+        html, body { height: 100%; }
+        body { font-family: Arial, sans-serif; color: #222; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .container { width: 100%; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 6px; }
+        .header h2 { margin: 0; font-size: 16px; }
+        .sub { text-align: left; margin-bottom: 6px; font-size: 11px; line-height: 1.2; }
+        .print-btn { position: fixed; top: 12px; right: 12px; background: #1976d2; color: #fff; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        @media print { .print-btn { display: none; } }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        th, td { border: 1px solid #777; padding: 2px 4px; font-size: 10px; line-height: 1.15; white-space: nowrap; }
+        th { background: #f0f0f0; }
+        tfoot td { font-weight: bold; }
+        .sign { margin-top: 12px; font-size: 11px; }
+        .col-data { width: 8%; }
+        .col-time { width: 8%; }
+        .col-num { width: 7%; }
+        </style>
+        
+        </head>
+        <body>
+        <button class='print-btn' onclick='window.print()'>Imprimir</button>
+        <div class='container'>
+            <div class='header'>
+                <h2>Demonstrativo de Ponto</h2>
+            </div>
+            <div class='sub'>
+                <div>Funcionário: Fulano</div>
+                <div>CPF: 52998224725</div>
+                <div>Período: 11/2025</div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class='col-data'>Data</th>
+                        <th class='col-time'>Entrada</th>
+                        <th class='col-time'>Saída Almoço</th>
+                        <th class='col-time'>Retorno</th>
+                        <th class='col-time'>Saída Final</th>
+                        <th class='col-num'>Total (h)</th>
+                        <th class='col-num'>Extra 50</th>
+                        <th class='col-num'>Extra 100</th>
+                        <th class='col-num'>Atrasos</th>
+                        <th class='col-num'>Faltas</th>
+                        <th class='col-num'>Banco (h)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>2025-11-01</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-02</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-03</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-04</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-05</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-06</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-07</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-08</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-09</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-10</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-11</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-12</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-13</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-14</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-15</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-16</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-17</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-18</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-19</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-20</td><td>08:00</td><td>12:00</td><td>13:00</td><td>17:00</td><td>8.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-21</td><td>08:00</td><td>12:00</td><td>13:00</td><td>17:00</td><td>8.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-22</td><td>08:00</td><td>12:00</td><td>13:00</td><td>17:00</td><td>8.00</td><td>0.00</td><td>8.00</td><td>0.00</td><td>0</td><td>8.00</td></tr><tr><td>2025-11-23</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-24</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-25</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-26</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-27</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-28</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>8.00</td><td>1</td><td>-8.00</td></tr><tr><td>2025-11-29</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr><tr><td>2025-11-30</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0</td><td>0.00</td></tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan='5'>Totais</td>
+                        <td>24.00</td>
+                        <td>0.00</td>
+                        <td>8.00</td>
+                        <td>144.00</td>
+                        <td>18</td>
+                        <td>-136.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class='sign'>Assinatura do Funcionário</div>
+        </div>
+        </body>
+        </html>
+        

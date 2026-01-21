@@ -1,0 +1,861 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Espelho de Ponto - IDENILSON RODRIGUES CHAVES</title>
+            
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+            :root {
+                --primary: #2c3e50;
+                --secondary: #34495e;
+                --accent: #3498db;
+                --success: #27ae60;
+                --danger: #e74c3c;
+                --warning: #f39c12;
+                --light: #f8f9fa;
+                --border: #e9ecef;
+            }
+            body { 
+                font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+                margin: 0; 
+                padding: 40px; 
+                background: #f0f2f5; 
+                color: #1a1a1a;
+                -webkit-print-color-adjust: exact;
+                line-height: 1.5;
+            }
+            .container { 
+                background: white; 
+                padding: 50px; 
+                border-radius: 12px; 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+                max-width: 1100px; 
+                margin: 0 auto; 
+            }
+            .header { 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: flex-start; 
+                border-bottom: 2px solid var(--border); 
+                padding-bottom: 30px; 
+                margin-bottom: 40px;
+            }
+            .header-logo {
+                font-size: 24px;
+                font-weight: 800;
+                color: var(--primary);
+                text-transform: uppercase;
+                letter-spacing: -0.5px;
+                margin-bottom: 8px;
+            }
+            .company-info {
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 2px;
+            }
+            .header-title h1 {
+                margin: 0;
+                font-size: 32px;
+                color: var(--primary);
+                font-weight: 700;
+                letter-spacing: -1px;
+            }
+            .header-title p {
+                margin: 5px 0 0;
+                color: #666;
+                font-size: 15px;
+                text-align: right;
+            }
+            
+            .info-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 25px;
+                background: #f8f9fa;
+                padding: 25px;
+                border-radius: 10px;
+                margin-bottom: 40px;
+                border: 1px solid var(--border);
+            }
+            .info-item {
+                display: flex;
+                flex-direction: column;
+            }
+            .info-label {
+                font-size: 11px;
+                color: #7f8c8d;
+                text-transform: uppercase;
+                margin-bottom: 6px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+            .info-value {
+                font-size: 15px;
+                font-weight: 600;
+                color: var(--primary);
+            }
+            
+            table { 
+                width: 100%; 
+                border-collapse: separate;
+                border-spacing: 0;
+                margin-bottom: 40px; 
+                font-size: 13px;
+                background: white;
+            }
+            th { 
+                background: var(--light); 
+                color: var(--secondary); 
+                padding: 15px 10px; 
+                text-align: center; 
+                font-weight: 600;
+                border-bottom: 2px solid #dee2e6;
+                text-transform: uppercase;
+                font-size: 11px;
+                letter-spacing: 0.5px;
+            }
+            td { 
+                border-bottom: 1px solid var(--border); 
+                padding: 12px 10px; 
+                text-align: center; 
+                color: #444;
+            }
+            tr:last-child td { border-bottom: none; }
+            tr:hover td { background-color: #f8f9fa; }
+            
+            .weekend td { background-color: #fdfbf7; color: #b7950b; }
+            .feriado td { background-color: #fef2f2; color: #c0392b; }
+            
+            tfoot tr td { 
+                background: var(--light); 
+                font-weight: 700; 
+                border-top: 2px solid #dee2e6;
+                color: var(--primary);
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+            
+            .summary-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-top: 40px;
+                gap: 40px;
+            }
+            .notes-section {
+                flex: 1;
+            }
+            .notes-box {
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                height: 100px;
+                background: #fdfdfd;
+            }
+            
+            .summary-box {
+                width: 350px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            }
+            .summary-header {
+                background: var(--primary);
+                color: white;
+                padding: 15px;
+                text-align: center;
+                font-weight: 600;
+                font-size: 14px;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .summary-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 15px 20px;
+                border-bottom: 1px solid var(--border);
+                font-size: 14px;
+            }
+            .summary-row:last-child { border-bottom: none; }
+            .summary-label { color: #666; }
+            .summary-value { font-weight: 700; font-family: 'Inter', monospace; }
+            
+            .footer {
+                margin-top: 80px;
+                display: flex;
+                justify-content: space-between;
+                padding-top: 30px;
+                border-top: 1px solid var(--border);
+            }
+            .signature-box {
+                width: 40%;
+                text-align: center;
+            }
+            .signature-line {
+                border-top: 1px solid #000;
+                margin-bottom: 12px;
+                width: 100%;
+            }
+            .signature-text {
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--primary);
+                text-transform: uppercase;
+            }
+            
+            .print-btn {
+                position: fixed;
+                top: 30px;
+                right: 30px;
+                background: var(--accent);
+                color: white;
+                border: none;
+                padding: 12px 25px;
+                border-radius: 50px;
+                cursor: pointer;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .print-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4); }
+            
+            @media print {
+                body { background: white; padding: 0; }
+                .container { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
+                .print-btn { display: none; }
+                .weekend td { background-color: #fdfbf7 !important; -webkit-print-color-adjust: exact; }
+                .feriado td { background-color: #fef2f2 !important; -webkit-print-color-adjust: exact; }
+                th { background-color: #f8f9fa !important; color: black !important; -webkit-print-color-adjust: exact; }
+                .summary-header { background: #2c3e50 !important; color: white !important; -webkit-print-color-adjust: exact; }
+            }
+            
+            /* Utility classes for values */
+            .val-pos { color: var(--success); }
+            .val-neg { color: var(--danger); }
+            .val-neutral { color: var(--secondary); }
+        </style>
+        
+        </head>
+        <body>
+            <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR / PDF</button>
+            
+            <div class="container">
+                <div class="header">
+                    <div class="header-left">
+                        <div class="header-logo">EMPRESA NÃO CONFIGURADA</div>
+                        <div class="company-info"></div>
+                        <div class="company-info"></div>
+                    </div>
+                    <div class="header-title">
+                        <h1>Espelho de Ponto</h1>
+                        <p>Período: 21/12/2025 a 20/01/2026</p>
+                    </div>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Funcionário</span>
+                        <span class="info-value">IDENILSON RODRIGUES CHAVES</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">CPF</span>
+                        <span class="info-value">36768956817</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">PIS</span>
+                        <span class="info-value"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Departamento</span>
+                        <span class="info-value">GERAL</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Cargo</span>
+                        <span class="info-value">GERENTE</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Carga Horária</span>
+                        <span class="info-value">08:00</span>
+                    </div>
+                </div>
+                
+                <table>
+                <thead>
+                    <tr>
+                        <th style='text-align: left; padding-left: 15px;'>Data</th>
+                        <th>Entrada</th>
+                        <th>Saída Almoço</th>
+                        <th>Retorno</th>
+                        <th>Saída</th>
+                        <th>Total</th>
+                        <th>Noturna</th>
+                        <th>Ext 50%</th>
+                        <th>Ext 100%</th>
+                        <th>Atrasos</th>
+                        <th>Faltas</th>
+                        <th>Banco</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>21/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>22/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>23/12/2025</td>
+                <td>07:37</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>24/12/2025</td>
+                <td>07:00</td>
+                <td>11:00</td>
+                <td>12:23</td>
+                <td>17:24</td>
+                <td style='font-weight: 600;'>9.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>1.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+1.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>25/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Abono</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>26/12/2025</td>
+                <td>07:00</td>
+                <td></td>
+                <td>12:22</td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>27/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>28/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>29/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>30/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>31/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>01/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>02/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>03/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>04/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>05/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>06/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>07/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>08/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>09/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>10/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>11/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>12/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>13/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>14/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>15/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>16/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>17/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>18/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>0.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--success);'>+0.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>19/01/2026</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: var(--danger); font-weight: 700;'>1</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'>Falta</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px; font-weight: 500;'>20/01/2026</td>
+                <td>08:52</td>
+                <td>07:44</td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: 600;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: #666;'>0.00</td>
+                <td style='color: var(--danger); font-weight: 500;'>8.00</td>
+                <td style='color: #ccc; font-weight: 700;'>0</td>
+                <td style='font-weight: 700; color: var(--danger);'>-8.00</td>
+                <td style='font-size: 11px; color: #555; text-align: left;'></td>
+            </tr>
+            
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan='5' style='text-align: right; padding-right: 20px;'>TOTAIS DO PERÍODO</td>
+                        <td>9.00</td>
+                        <td>0.00</td>
+                        <td>1.00</td>
+                        <td>0.00</td>
+                        <td>168.00</td>
+                        <td>18</td>
+                        <td style='color: var(--danger);'>-167.00</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <div class="summary-container">
+                <div class="notes-section">
+                    <p style='font-size: 12px; color: #666; margin-bottom: 8px; font-weight: 600; text-transform: uppercase;'>Observações</p>
+                    <div class="notes-box"></div>
+                </div>
+                
+                <div class='summary-box'>
+                    <div class='summary-header'>Resumo do Banco de Horas</div>
+                    <div class='summary-row'>
+                        <span class='summary-label'>Saldo Anterior</span>
+                        <span class='summary-value' style='color: var(--danger);'>-184.00</span>
+                    </div>
+                    <div class='summary-row'>
+                        <span class='summary-label'>Saldo do Período</span>
+                        <span class='summary-value' style='color: var(--danger);'>-167.00</span>
+                    </div>
+                    <div class='summary-row' style='background: #f8f9fa;'>
+                        <span class='summary-label' style='font-weight: 700; color: var(--primary);'>SALDO ATUAL</span>
+                        <span class='summary-value' style='color: var(--danger); font-size: 16px;'>-351.00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class='footer'>
+                <div class='signature-box'>
+                    <div class='signature-line'></div>
+                    <div class='signature-text'>Assinatura do Empregador</div>
+                </div>
+                <div class='signature-box'>
+                    <div class='signature-line'></div>
+                    <div class='signature-text'>Assinatura do Funcionário</div>
+                    <div style='font-size: 10px; color: #999; margin-top: 5px;'>Reconheço a exatidão das informações acima</div>
+                </div>
+            </div>
+            
+            <div style='text-align: center; margin-top: 40px; font-size: 11px; color: #b0b0b0;'>
+                Documento gerado eletronicamente em 20/01/2026 às 16:29:22 • Sistema Ponto.NET
+                <br>Conforme Portaria 671/2021
+            </div>
+        </div>
+        </body>
+        </html>
+        

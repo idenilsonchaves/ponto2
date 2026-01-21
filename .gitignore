@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Flet / Flutter / Build
+build/
+dist/
+*.spec
+*.apk
+*.aab
+
+# IDEs
+.vscode/
+.idea/
+
+# Project Specific
+assets/relatorios/
+assets/backups/
+*.log
+database.db

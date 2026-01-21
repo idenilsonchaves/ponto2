@@ -1,0 +1,786 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset='utf-8'>
+            <title>Espelho de Ponto - IDENILSON RODRIGUES CHAVES</title>
+            
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+            body { 
+                font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                margin: 0; 
+                padding: 40px; 
+                background: #f5f5f5; 
+                color: #333;
+                -webkit-print-color-adjust: exact;
+            }
+            .container { 
+                background: white; 
+                padding: 40px; 
+                border-radius: 8px; 
+                box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+                max-width: 1100px; 
+                margin: 0 auto; 
+            }
+            .header { 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: flex-start; 
+                border-bottom: 2px solid #2c3e50; 
+                padding-bottom: 20px; 
+                margin-bottom: 30px;
+            }
+            .header-left {
+                display: flex;
+                flex-direction: column;
+            }
+            .header-logo {
+                font-size: 24px;
+                font-weight: 700;
+                color: #2c3e50;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 5px;
+            }
+            .company-info {
+                font-size: 12px;
+                color: #555;
+            }
+            .header-title {
+                text-align: right;
+            }
+            .header-title h1 {
+                margin: 0;
+                font-size: 28px;
+                color: #2c3e50;
+            }
+            .header-title p {
+                margin: 5px 0 0;
+                color: #7f8c8d;
+                font-size: 14px;
+            }
+            
+            .info-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 6px;
+                margin-bottom: 30px;
+                border: 1px solid #e9ecef;
+            }
+            .info-item {
+                display: flex;
+                flex-direction: column;
+            }
+            .info-label {
+                font-size: 12px;
+                color: #7f8c8d;
+                text-transform: uppercase;
+                margin-bottom: 5px;
+                font-weight: 500;
+            }
+            .info-value {
+                font-size: 15px;
+                font-weight: 600;
+                color: #2c3e50;
+            }
+            
+            table { 
+                width: 100%; 
+                border-collapse: collapse; 
+                margin-bottom: 30px; 
+                font-size: 13px;
+                background: white;
+            }
+            th { 
+                background: #2c3e50; 
+                color: white; 
+                padding: 12px 8px; 
+                text-align: center; 
+                font-weight: 500;
+                letter-spacing: 0.5px;
+            }
+            td { 
+                border-bottom: 1px solid #eee; 
+                padding: 10px 8px; 
+                text-align: center; 
+                color: #555;
+            }
+            tr:nth-child(even) { background-color: #f8f9fa; }
+            tr:hover { background-color: #f1f1f1; }
+            
+            .weekend { background-color: #fff3cd !important; color: #856404; }
+            .feriado { background-color: #f8d7da !important; color: #721c24; }
+            
+            tfoot tr td { 
+                background: #e9ecef; 
+                font-weight: bold; 
+                border-top: 2px solid #dee2e6;
+                color: #2c3e50;
+                padding: 15px 8px;
+            }
+            
+            .summary-section {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 20px;
+            }
+            .summary-box {
+                width: 300px;
+                border: 1px solid #dee2e6;
+                border-radius: 6px;
+                overflow: hidden;
+            }
+            .summary-header {
+                background: #2c3e50;
+                color: white;
+                padding: 10px;
+                text-align: center;
+                font-weight: bold;
+            }
+            .summary-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 15px;
+                border-bottom: 1px solid #eee;
+            }
+            .summary-row:last-child { border-bottom: none; }
+            .summary-label { color: #666; }
+            .summary-value { font-weight: bold; color: #2c3e50; }
+            
+            .footer {
+                margin-top: 60px;
+                display: flex;
+                justify-content: space-between;
+                padding-top: 20px;
+                border-top: 1px solid #ddd;
+            }
+            .signature-box {
+                width: 45%;
+                text-align: center;
+            }
+            .signature-line {
+                border-top: 1px solid #000;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            .signature-text {
+                font-size: 12px;
+                color: #666;
+            }
+            
+            .print-btn {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #3498db;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                transition: background 0.2s;
+            }
+            .print-btn:hover { background: #2980b9; }
+            
+            @media print {
+                body { background: white; padding: 0; }
+                .container { box-shadow: none; padding: 0; max-width: 100%; }
+                .print-btn { display: none; }
+                .weekend { background-color: #fff3cd !important; -webkit-print-color-adjust: exact; }
+                .feriado { background-color: #f8d7da !important; -webkit-print-color-adjust: exact; }
+                th { background-color: #2c3e50 !important; color: white !important; -webkit-print-color-adjust: exact; }
+            }
+        </style>
+        
+        </head>
+        <body>
+        <button class='print-btn' onclick='window.print()'>IMPRIMIR RELATÓRIO</button>
+        
+        <div class='container'>
+            <div class='header'>
+                <div class='header-left'>
+                    <div class='header-logo'>
+                        EMPRESA NÃO CONFIGURADA
+                    </div>
+                    <div class='company-info'>
+                        CNPJ: <br>
+                        
+                    </div>
+                </div>
+                <div class='header-title'>
+                    <h1>Espelho de Ponto</h1>
+                    <p>Relatório Mensal de Frequência</p>
+                </div>
+            </div>
+            
+            <div class='info-grid'>
+                <div class='info-item'>
+                    <span class='info-label'>Funcionário</span>
+                    <span class='info-value'>IDENILSON RODRIGUES CHAVES</span>
+                </div>
+                <div class='info-item'>
+                    <span class='info-label'>CPF</span>
+                    <span class='info-value'>36768956817</span>
+                </div>
+                <div class='info-item'>
+                    <span class='info-label'>PIS</span>
+                    <span class='info-value'>N/A</span>
+                </div>
+                <div class='info-item'>
+                    <span class='info-label'>Cargo/Depto</span>
+                    <span class='info-value'>GERENTE - GERAL</span>
+                </div>
+                <div class='info-item'>
+                    <span class='info-label'>Período</span>
+                    <span class='info-value'>12/2025</span>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style='text-align: left; padding-left: 15px;'>Data</th>
+                        <th>Entrada</th>
+                        <th>Saída Almoço</th>
+                        <th>Retorno</th>
+                        <th>Saída</th>
+                        <th>Total</th>
+                        <th>Noturna</th>
+                        <th>Ext 50%</th>
+                        <th>Ext 100%</th>
+                        <th>Atrasos</th>
+                        <th>Faltas</th>
+                        <th>Banco</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>01/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>02/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>03/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>04/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>05/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px;'>06/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+0.00</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px;'>07/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+0.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>08/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>09/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>10/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>11/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>12/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px;'>13/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+0.00</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px;'>14/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+0.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>15/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>16/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>17/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>18/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>19/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px;'>20/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+0.00</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px;'>21/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+0.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>22/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>23/12/2025</td>
+                <td>07:37</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>24/12/2025</td>
+                <td>07:21</td>
+                <td>11:00</td>
+                <td>12:23</td>
+                <td>17:24</td>
+                <td style='font-weight: bold;'>8.66</td>
+                <td>0.00</td>
+                <td>2.00</td>
+                <td>2.66</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+4.66</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>25/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>26/12/2025</td>
+                <td>07:00</td>
+                <td></td>
+                <td>12:22</td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px;'>27/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+0.00</td>
+            </tr>
+            
+            <tr class='weekend'>
+                <td style='text-align: left; padding-left: 15px;'>28/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>0.00</td>
+                <td style='color: #2c3e50;'>0</td>
+                <td style='font-weight: bold; color: #27ae60;'>+0.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>29/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>30/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+            <tr class=''>
+                <td style='text-align: left; padding-left: 15px;'>31/12/2025</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style='font-weight: bold;'>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td style='color: #e74c3c;'>4.00</td>
+                <td style='color: #e74c3c;'>1</td>
+                <td style='font-weight: bold; color: #c0392b;'>-4.00</td>
+            </tr>
+            
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan='5' style='text-align: right; padding-right: 20px;'>TOTAIS DO PERÍODO</td>
+                        <td>8.66</td>
+                        <td>0.00</td>
+                        <td>2.00</td>
+                        <td>2.66</td>
+                        <td>88.00</td>
+                        <td>20</td>
+                        <td style='color: #c0392b;'>-83.34</td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <div style='display: flex; justify-content: space-between;'>
+                <div style='width: 60%;'>
+                    <p style='font-size: 12px; color: #666; margin-bottom: 5px;'>Observações:</p>
+                    <div style='border: 1px solid #eee; height: 80px; border-radius: 4px;'></div>
+                </div>
+                
+                <div class='summary-box'>
+                    <div class='summary-header'>RESUMO DO BANCO DE HORAS</div>
+                    <div class='summary-row'>
+                        <span class='summary-label'>Saldo Anterior:</span>
+                        <span class='summary-value' style='color: #c0392b;'>-80.00</span>
+                    </div>
+                    <div class='summary-row'>
+                        <span class='summary-label'>Créditos/Débitos (Período):</span>
+                        <span class='summary-value' style='color: #c0392b;'>-83.34</span>
+                    </div>
+                    <div class='summary-row' style='background: #f8f9fa;'>
+                        <span class='summary-label'>SALDO ATUAL:</span>
+                        <span class='summary-value' style='color: #c0392b;'>-163.34</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class='footer'>
+                <div class='signature-box'>
+                    <div class='signature-line'></div>
+                    <div class='signature-text'>Assinatura do Empregador</div>
+                </div>
+                <div class='signature-box'>
+                    <div class='signature-line'></div>
+                    <div class='signature-text'>Assinatura do Funcionário</div>
+                    <div style='font-size: 10px; color: #999; margin-top: 5px;'>Reconheço a exatidão das informações acima</div>
+                </div>
+            </div>
+            
+            <div style='text-align: center; margin-top: 30px; font-size: 10px; color: #aaa;'>
+                Documento gerado eletronicamente em 26/12/2025 às 14:06:34 pelo Sistema Ponto.NET
+                <br>Conforme Portaria 671/2021
+            </div>
+        </div>
+        </body>
+        </html>
+        
