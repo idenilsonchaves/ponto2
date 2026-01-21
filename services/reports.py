@@ -489,6 +489,9 @@ class ReportService:
         return path
 
     def gerar_espelho_ponto_pdf(self, funcionario_id: int, ano: int, mes: int) -> str:
+        if not REPORTLAB_AVAILABLE:
+            raise ImportError("Biblioteca reportlab não instalada. PDF indisponível no momento.")
+
         rel = self.gerar_relatorio_mensal(funcionario_id, ano, mes)
         data_inicio, data_fim = self._obter_periodo_fechamento(ano, mes)
         
