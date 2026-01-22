@@ -1,0 +1,65 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="mb-4">Relatórios</h3>
+        
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Gerar Relatório Mensal (Espelho de Ponto)</h5>
+            </div>
+            <div class="card-body">
+                <form action="/admin/relatorios/gerar" method="post" target="_blank">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="mes" class="form-label">Mês</label>
+                            <select class="form-select" id="mes" name="mes" required>
+                                {% for m in range(1, 13) %}
+                                <option value="{{ m }}" {% if m == hoje.month %}selected{% endif %}>{{ m }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="ano" class="form-label">Ano</label>
+                            <select class="form-select" id="ano" name="ano" required>
+                                {% for y in range(hoje.year - 1, hoje.year + 2) %}
+                                <option value="{{ y }}" {% if y == hoje.year %}selected{% endif %}>{{ y }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="funcionario_id" class="form-label">Funcionário</label>
+                            <select class="form-select" id="funcionario_id" name="funcionario_id" required>
+                                <option value="" disabled selected>Selecione um funcionário</option>
+                                {% for f in funcionarios %}
+                                <option value="{{ f.id }}">{{ f.nome }} ({{ f.cpf }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label for="formato" class="form-label">Formato</label>
+                            <select class="form-select" id="formato" name="formato" required>
+                                <option value="pdf">PDF</option>
+                                <option value="excel">Excel (XLSX)</option>
+                                <option value="html">Visualizar (HTML)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-file-earmark-text"></i> Gerar Relatório
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> O relatório será gerado considerando o período de fechamento configurado (padrão: dia 1 a fim do mês, ou conforme dia de fechamento).
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

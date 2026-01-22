@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Ponto Eletrônico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+            height: 100vh;
+        }
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-signin .form-floating:focus-within {
+            z-index: 2;
+        }
+        .form-signin input[type="text"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        .mid-input {
+            margin-bottom: -1px;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body class="text-center">
+    <main class="form-signin">
+        <form action="/registro" method="post">
+            <h1 class="h3 mb-3 fw-normal">Criar Acesso</h1>
+            <p class="text-muted small">Informe seu CPF para validar o vínculo com o cadastro de funcionário.</p>
+            
+            {% if erro %}
+            <div class="alert alert-danger">{{ erro }}</div>
+            {% endif %}
+
+            <div class="form-floating">
+                <input type="text" name="cpf" class="form-control" id="floatingCPF" placeholder="CPF (apenas números)" required value="{{ cpf or '' }}">
+                <label for="floatingCPF">CPF (apenas números)</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" name="username" class="form-control mid-input" id="floatingUser" placeholder="Usuário desejado" required value="{{ username or '' }}">
+                <label for="floatingUser">Usuário desejado</label>
+            </div>
+            <div class="form-floating">
+                <input type="email" name="email" class="form-control mid-input" id="floatingEmail" placeholder="E-mail" required value="{{ email or '' }}">
+                <label for="floatingEmail">E-mail</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Senha" required>
+                <label for="floatingPassword">Senha</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-success mb-3" type="submit">Cadastrar</button>
+            
+            <a href="/login" class="text-decoration-none">Já tenho conta</a>
+            
+            <p class="mt-4 mb-3 text-muted">&copy; 2024</p>
+        </form>
+    </main>
+</body>
+</html>

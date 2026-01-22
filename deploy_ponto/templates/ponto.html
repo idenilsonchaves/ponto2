@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card card-ponto">
+    <div class="card-body text-center p-4">
+        <h2 class="mb-4"><i class="bi bi-clock-history text-primary"></i> Ponto Eletrônico</h2>
+        
+        {% if erro %}
+        <div class="alert alert-danger">{{ erro }}</div>
+        {% endif %}
+
+        <form action="/verificar_pin" method="post">
+            <div class="mb-4">
+                <input type="password" name="pin" id="pin" class="form-control form-control-lg text-center" placeholder="Digite seu PIN ou CPF" inputmode="numeric" autofocus required style="font-size: 2rem;">
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg w-100 py-3">ENTRAR</button>
+        </form>
+        
+        <div class="mt-4 text-muted">
+            <small>v2.0 Web Interface</small>
+        </div>
+        
+        <div class="mt-3">
+            <a href="/admin" class="btn btn-outline-secondary btn-sm">Área Admin</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

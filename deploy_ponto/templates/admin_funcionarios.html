@@ -1,0 +1,163 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Cadastrar / Editar Funcionário</h5>
+    </div>
+    <div class="card-body">
+        <form action="/admin/funcionario/salvar" method="post" class="row g-3">
+            <input type="hidden" name="id" id="funcId">
+            <div class="col-md-6">
+                <label class="form-label">Nome Completo</label>
+                <input type="text" name="nome" id="funcNome" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">CPF</label>
+                <input type="text" name="cpf" id="funcCpf" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">PIS</label>
+                <input type="text" name="pis" id="funcPis" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">PIN (Acesso)</label>
+                <input type="text" name="pin" id="funcPin" class="form-control" maxlength="4">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Cargo</label>
+                <input type="text" name="cargo" id="funcCargo" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Departamento</label>
+                <select name="departamento" id="funcDep" class="form-select">
+                    <option value="">Selecione...</option>
+                    {% for dep in departamentos %}
+                    <option value="{{ dep.nome }}">{{ dep.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Carga Horária (HH:mm)</label>
+                <input type="time" name="carga_horaria" id="funcCarga" class="form-control" value="08:00">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" id="funcEmail" class="form-control">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Entrada Padrão</label>
+                <input type="time" name="hora_entrada" id="funcEntrada" class="form-control" value="08:00">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Saída Padrão</label>
+                <input type="time" name="hora_saida" id="funcSaida" class="form-control" value="17:00">
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" name="ativo" value="true" checked id="checkAtivo">
+                    <label class="form-check-label" for="checkAtivo">
+                        Funcionário Ativo
+                    </label>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Salvar Funcionário</button>
+                <button type="button" class="btn btn-secondary" onclick="limparForm()">Limpar / Novo</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Lista de Funcionários</h5>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Depto</th>
+                    <th>Cargo</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in funcionarios %}
+                <tr>
+                    <td>{{ f.nome }}</td>
+                    <td>{{ f.cpf }}</td>
+                    <td>{{ f.departamento }}</td>
+                    <td>{{ f.cargo }}</td>
+                    <td>
+                        {% if f.ativo %}
+                        <span class="badge bg-success">Ativo</span>
+                        {% else %}
+                        <span class="badge bg-danger">Inativo</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-info" 
+                            onclick="editarFunc('{{ f.id }}', '{{ f.nome }}', '{{ f.cpf }}', '{{ f.pis }}', '{{ f.pin }}', '{{ f.cargo }}', '{{ f.departamento }}', '{{ f.email }}', '{{ f.carga_horaria_min }}', '{{ f.hora_entrada }}', '{{ f.hora_saida }}', '{{ f.ativo }}')">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <form action="/admin/funcionario/excluir" method="post" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este funcionário?');">
+                            <input type="hidden" name="id" value="{{ f.id }}">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function limparForm() {
+    document.getElementById('funcId').value = '';
+    document.getElementById('funcNome').value = '';
+    document.getElementById('funcCpf').value = '';
+    document.getElementById('funcPis').value = '';
+    document.getElementById('funcPin').value = '';
+    document.getElementById('funcCargo').value = '';
+    document.getElementById('funcDep').value = '';
+    document.getElementById('funcEmail').value = '';
+    document.getElementById('funcCarga').value = '08:00';
+    document.getElementById('funcEntrada').value = '08:00';
+    document.getElementById('funcSaida').value = '17:00';
+    document.getElementById('checkAtivo').checked = true;
+}
+
+function editarFunc(id, nome, cpf, pis, pin, cargo, dep, email, cargaMin, entrada, saida, ativo) {
+    document.getElementById('funcId').value = id;
+    document.getElementById('funcNome').value = nome;
+    document.getElementById('funcCpf').value = cpf;
+    document.getElementById('funcPis').value = (pis && pis !== 'None') ? pis : '';
+    document.getElementById('funcPin').value = (pin && pin !== 'None') ? pin : '';
+    document.getElementById('funcCargo').value = (cargo && cargo !== 'None') ? cargo : '';
+    document.getElementById('funcDep').value = (dep && dep !== 'None') ? dep : '';
+    document.getElementById('funcEmail').value = (email && email !== 'None') ? email : '';
+    document.getElementById('funcEntrada').value = (entrada && entrada !== 'None') ? entrada : '08:00';
+    document.getElementById('funcSaida').value = (saida && saida !== 'None') ? saida : '17:00';
+    
+    // Converter minutos para HH:mm
+    if (cargaMin) {
+        let min = parseInt(cargaMin);
+        let h = Math.floor(min / 60);
+        let m = min % 60;
+        let timeStr = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+        document.getElementById('funcCarga').value = timeStr;
+    }
+    
+    document.getElementById('checkAtivo').checked = (ativo === 'True' || ativo === '1' || ativo === true);
+    
+    window.scrollTo(0, 0);
+}
+</script>
+{% endblock %}

@@ -1,34 +1,30 @@
-# Como Gerar o APK (Android)
+# Como ter o Aplicativo no Celular
 
-Existem duas formas de gerar o APK do aplicativo:
+Como seu sistema é **Web (Online)**, existem duas formas de transformá-lo em App:
 
-## Opção 1: Usando GitHub Actions (Recomendado)
-Esta opção é a mais fácil pois não exige instalar nada no seu computador.
+## Opção 1: PWA (Mais Fácil e Recomendada)
+Seu site já está configurado como um **Progressive Web App (PWA)**.
+Isso significa que ele pode ser instalado sem precisar da loja de aplicativos.
 
-1. Faça o upload deste projeto para um repositório no GitHub.
-2. Vá na aba **Actions** do seu repositório.
-3. Você verá o workflow "Build Android APK".
-4. Se ele não rodar automaticamente, clique nele e depois em "Run workflow".
-5. Quando terminar (pode levar uns 10-15 minutos), clique no workflow concluído.
-6. Role até o final da página e baixe o artefato `app-release.apk`.
+1. Acesse o site no navegador do celular (Chrome no Android ou Safari no iPhone).
+2. Toque no menu (três pontinhos ou botão de compartilhar).
+3. Escolha **"Adicionar à Tela Inicial"** ou **"Instalar Aplicativo"**.
+4. Pronto! Ele vai aparecer como um App nativo no seu celular.
 
-## Opção 2: Compilando Localmente (Avançado)
-Você precisará ter o **Flutter** instalado e configurado no seu computador.
+---
 
-1. Instale o Flutter: https://flutter.dev/docs/get-started/install
-2. Verifique se está tudo certo:
-   ```bash
-   flutter doctor
-   ```
-3. Instale as dependências do Python:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Execute o comando de build:
-   ```bash
-   flet build apk --project-name "Ponto2" --product-name "Ponto Eletronico" --org "com.ponto.app"
-   ```
-5. O APK será gerado na pasta `build/apk/`.
+## Opção 2: Gerar APK via GitHub (Avançado)
+Você perguntou se pode gerar um APK pelo Git. **Sim, é possível**, mas com uma ressalva importante:
 
-## Observações Importantes para Mobile
-- **Banco de Dados**: No Android, o banco de dados deve ser salvo em um local onde o app tenha permissão de escrita. O código atual tenta salvar na pasta do app, o que pode ser somente-leitura no Android. Recomenda-se ajustar o caminho do banco de dados para usar `page.client_storage` ou um caminho de sistema adequado se encontrar problemas de persistência.
+### ⚠️ O Problema do APK "Offline"
+O arquivo `build_apk.yml` que existe no seu Git hoje gera um aplicativo baseado no código `main_mobile.py`.
+Este aplicativo é **OFFLINE**. Ele cria um banco de dados novo dentro do celular e **NÃO conversa** com o seu site na UOL Host.
+Se você usar esse APK, os pontos batidos nele **não aparecerão** no site.
+
+### ✅ Como gerar um APK que abre o Site (Launcher)
+Se você quer um arquivo `.apk` real que apenas abre o seu site (como se fosse um navegador exclusivo):
+
+1. Você precisa de um projeto "Wrapper" (como Bubblewrap ou WebView).
+2. O código atual do repositório (`main_mobile.py`) teria que ser substituído por uma lógica que apenas carrega a URL do seu site.
+
+**Minha sugestão:** Use a **Opção 1 (PWA)**. É tecnologia moderna, funciona igual a um app, não precisa pagar conta de desenvolvedor na Google Play e atualiza automaticamente quando você muda o site.

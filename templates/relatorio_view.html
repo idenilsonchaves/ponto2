@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 d-print-none">
+        <h2>Espelho de Ponto</h2>
+        <div>
+            <button onclick="window.print()" class="btn btn-secondary me-2">
+                <i class="bi bi-printer"></i> Imprimir
+            </button>
+            <a href="/admin/relatorios" class="btn btn-outline-primary">Voltar</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="text-center mb-4">
+                <h4>Espelho de Ponto Individual</h4>
+                <p class="text-muted mb-0">Período: {{ data_inicio.strftime('%d/%m/%Y') }} a {{ data_fim.strftime('%d/%m/%Y') }}</p>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <strong>Funcionário:</strong> {{ relatorio.funcionario_nome }}
+                </div>
+                <div class="col-md-6 text-end">
+                    <strong>Emissão:</strong> {{ relatorio.ano }}-{{ "%02d"|format(relatorio.mes) }}
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm table-hover">
+                    <thead class="table-light">
+                        <tr class="text-center align-middle">
+                            <th rowspan="2">Data</th>
+                            <th colspan="4">Marcações</th>
+                            <th colspan="6">Cálculos</th>
+                            <th rowspan="2">Obs</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th>Entrada</th>
+                            <th>Saída</th>
+                            <th>Retorno</th>
+                            <th>Saída</th>
+                            <th>Total</th>
+                            <th>Ex.50%</th>
+                            <th>Ex.100%</th>
+                            <th>Atrasos</th>
+                            <th>Faltas</th>
+                            <th>Banco</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dia in relatorio.dias %}
+                        <tr class="text-center">
+                            <td>{{ dia.data|replace("-", "/") }}</td>
+                            <td>{{ dia.hora_entrada or "" }}</td>
+                            <td>{{ dia.saida_almoco or "" }}</td>
+                            <td>{{ dia.retorno_almoco or "" }}</td>
+                            <td>{{ dia.saida_final or dia.hora_saida or "" }}</td>
+                            <td>{{ "%.2f"|format(dia.horas_trabalhadas) }}</td>
+                            <td>{{ "%.2f"|format(dia.extras_50) }}</td>
+                            <td>{{ "%.2f"|format(dia.extras_100) }}</td>
+                            <td>{{ "%.2f"|format(dia.atrasos) }}</td>
+                            <td>{{ dia.faltas }}</td>
+                            <td class="{{ 'text-danger' if dia.saldo_banco < 0 else 'text-success' }}">
+                                {{ "%+.2f"|format(dia.saldo_banco) }}
+                            </td>
+                            <td class="text-start small">{{ dia.observacao }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class="table-light fw-bold">
+                        <tr class="text-center">
+                            <td colspan="5" class="text-end">TOTAIS:</td>
+                            <td>{{ "%.2f"|format(relatorio.totais.horas_trabalhadas) }}</td>
+                            <td>{{ "%.2f"|format(relatorio.totais.extras_50) }}</td>
+                            <td>{{ "%.2f"|format(relatorio.totais.extras_100) }}</td>
+                            <td>{{ "%.2f"|format(relatorio.totais.atrasos) }}</td>
+                            <td>{{ relatorio.totais.faltas }}</td>
+                            <td class="{{ 'text-danger' if relatorio.totais.saldo_banco < 0 else 'text-success' }}">
+                                {{ "%+.2f"|format(relatorio.totais.saldo_banco) }}
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-6 text-center">
+                    <hr class="w-75 mx-auto">
+                    <p>{{ relatorio.funcionario_nome }}</p>
+                </div>
+                <div class="col-6 text-center">
+                    <hr class="w-75 mx-auto">
+                    <p>Responsável</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

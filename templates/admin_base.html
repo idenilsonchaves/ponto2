@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Administração</h2>
+        <a href="/" class="btn btn-outline-primary">Voltar ao Ponto</a>
+    </div>
+
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'dashboard' %}active{% endif %}" href="/admin">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'funcionarios' %}active{% endif %}" href="/admin/funcionarios">Funcionários</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'registros' %}active{% endif %}" href="/admin/registros">Registros</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'ajustes' %}active{% endif %}" href="/admin/ajustes">Ajustes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'auditoria' %}active{% endif %}" href="/admin/auditoria">Auditoria</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'relatorios' %}active{% endif %}" href="/admin/relatorios">Relatórios</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if active_tab == 'config' %}active{% endif %}" href="/admin/config">Configurações</a>
+        </li>
+    </ul>
+
+    {% block admin_content %}{% endblock %}
+</div>
+{% endblock %}

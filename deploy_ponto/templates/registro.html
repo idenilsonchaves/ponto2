@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card card-ponto">
+    <div class="card-body text-center p-4">
+        <h3 class="mb-2">Olá, {{ nome }}!</h3>
+        <h1 class="display-4 fw-bold text-primary mb-4">{{ hora_atual }}</h1>
+
+        <form action="/registrar_ponto" method="post">
+            <input type="hidden" name="func_id" value="{{ funcionario.id }}">
+            
+            <div class="d-grid gap-2">
+                <button name="tipo" value="ENTRADA" class="btn btn-success btn-ponto">
+                    <i class="bi bi-box-arrow-in-right"></i> ENTRADA
+                </button>
+                
+                <button name="tipo" value="SAIDA_ALMOCO" class="btn btn-warning text-white btn-ponto">
+                    <i class="bi bi-cup-hot"></i> SAÍDA ALMOÇO
+                </button>
+                
+                <button name="tipo" value="RETORNO_ALMOCO" class="btn btn-warning text-white btn-ponto">
+                    <i class="bi bi-cup-hot-fill"></i> VOLTA ALMOÇO
+                </button>
+                
+                <button name="tipo" value="SAIDA_FINAL" class="btn btn-danger btn-ponto">
+                    <i class="bi bi-box-arrow-right"></i> SAÍDA
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-3">
+            <a href="/" class="btn btn-outline-secondary">Cancelar / Sair</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

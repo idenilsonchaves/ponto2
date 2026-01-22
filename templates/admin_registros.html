@@ -1,0 +1,175 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<div class="card mb-4">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Filtros</h5>
+        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalNovoRegistro">
+            <i class="bi bi-plus-lg"></i> Novo Registro Manual
+        </button>
+    </div>
+    <div class="card-body">
+        <form action="/admin/registros" method="get" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">Data Início</label>
+                <input type="date" name="data_inicio" value="{{ data_inicio }}" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Data Fim</label>
+                <input type="date" name="data_fim" value="{{ data_fim }}" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Funcionário</label>
+                <select name="func_id" class="form-select">
+                    <option value="">Todos</option>
+                    {% for f in funcionarios %}
+                    <option value="{{ f.id }}" {% if func_id_sel|string == f.id|string %}selected{% endif %}>{{ f.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Registros Encontrados</h5>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover mb-0 align-middle">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Funcionário</th>
+                    <th>Entrada</th>
+                    <th>Saída Almoço</th>
+                    <th>Volta Almoço</th>
+                    <th>Saída</th>
+                    <th>Tipo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in registros %}
+                <tr>
+                    <td>{{ r.data }}</td>
+                    <td>{{ r.funcionario_nome }}</td>
+                    <td>{{ r.hora_entrada or '-' }}</td>
+                    <td>{{ r.saida_almoco or '-' }}</td>
+                    <td>{{ r.retorno_almoco or '-' }}</td>
+                    <td>{{ r.saida_final or r.hora_saida or '-' }}</td>
+                    <td><span class="badge bg-secondary">{{ r.tipo }}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1" 
+                                data-registro='{{ r|tojson|forceescape }}'
+                                onclick='editarRegistro(this)'
+                                title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <form action="/admin/registros/excluir" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este registro?');">
+                            <input type="hidden" name="id" value="{{ r.id }}">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">Nenhum registro encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Novo/Editar Registro -->
+<div class="modal fade" id="modalNovoRegistro" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Novo Registro Manual</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="/admin/registros/salvar" method="post" id="formNovoRegistro">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="reg_id">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Funcionário</label>
+                        <select name="funcionario_id" id="reg_func_id" class="form-select" required>
+                            <option value="">Selecione...</option>
+                            {% for f in funcionarios %}
+                            <option value="{{ f.id }}">{{ f.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Data</label>
+                        <input type="date" name="data" id="reg_data" class="form-control" required value="{{ data_fim }}">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Entrada</label>
+                            <input type="time" step="1" name="hora_entrada" id="reg_entrada" class="form-control">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Saída Almoço</label>
+                            <input type="time" step="1" name="saida_almoco" id="reg_saida_almoco" class="form-control">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Volta Almoço</label>
+                            <input type="time" step="1" name="retorno_almoco" id="reg_retorno_almoco" class="form-control">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Saída Final</label>
+                            <input type="time" step="1" name="saida_final" id="reg_saida_final" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning small">
+                        <i class="bi bi-exclamation-triangle"></i> Registros manuais ficam marcados no sistema para auditoria.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function editarRegistro(btn) {
+    var r = JSON.parse(btn.dataset.registro);
+    document.getElementById('modalTitle').innerText = 'Editar Registro';
+    document.getElementById('reg_id').value = r.id;
+    document.getElementById('reg_func_id').value = r.funcionario_id;
+    document.getElementById('reg_data').value = r.data;
+    
+    // Preencher horários (se null, fica vazio)
+    document.getElementById('reg_entrada').value = r.hora_entrada || '';
+    document.getElementById('reg_saida_almoco').value = r.saida_almoco || '';
+    document.getElementById('reg_retorno_almoco').value = r.retorno_almoco || '';
+    document.getElementById('reg_saida_final').value = r.saida_final || r.hora_saida || '';
+    
+    // Mostrar modal
+    var modal = new bootstrap.Modal(document.getElementById('modalNovoRegistro'));
+    modal.show();
+}
+
+// Resetar modal ao fechar (para voltar a ser "Novo")
+document.getElementById('modalNovoRegistro').addEventListener('hidden.bs.modal', function () {
+    document.getElementById('modalTitle').innerText = 'Novo Registro Manual / Retroativo';
+    document.getElementById('reg_id').value = '';
+    document.getElementById('formNovoRegistro').reset();
+});
+</script>
+{% endblock %}

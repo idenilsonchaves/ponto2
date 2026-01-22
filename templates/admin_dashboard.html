@@ -1,0 +1,34 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Presentes Hoje</div>
+            <div class="card-body">
+                <h1 class="card-title">{{ presentes }} / {{ total }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-header">Faltas Prováveis</div>
+            <div class="card-body">
+                <h1 class="card-title">{{ faltas }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">Abonados</div>
+            <div class="card-body">
+                <h1 class="card-title">{{ abonados }}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <i class="bi bi-info-circle"></i> O dashboard mostra um resumo em tempo real do dia de hoje.
+</div>
+{% endblock %}

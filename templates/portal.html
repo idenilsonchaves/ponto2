@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}Portal do Colaborador{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-person-badge me-2"></i>Portal do Colaborador</h5>
+                <span class="badge bg-light text-primary">{{ user.username }}</span>
+            </div>
+            <div class="card-body">
+                <div class="text-center py-5">
+                    <i class="bi bi-cone-striped text-warning" style="font-size: 4rem;"></i>
+                    <h3 class="mt-3">Bem-vindo, {{ user.username }}!</h3>
+                    <p class="lead text-muted">Seu acesso ao portal foi confirmado.</p>
+                    <p>Em breve, você poderá visualizar seus espelhos de ponto, holerites e solicitar ajustes por aqui.</p>
+                    
+                    <hr>
+                    
+                    <div class="d-grid gap-2 d-md-block">
+                        <a href="/" class="btn btn-outline-primary">
+                            <i class="bi bi-clock me-2"></i>Ir para Relógio de Ponto
+                        </a>
+                        <a href="/logout" class="btn btn-outline-danger">
+                            <i class="bi bi-box-arrow-right me-2"></i>Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

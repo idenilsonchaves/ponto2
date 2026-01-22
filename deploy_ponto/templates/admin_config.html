@@ -1,0 +1,241 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Configurações do Sistema</h1>
+</div>
+
+{% if msg %}
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<form action="/admin/config/salvar" method="post">
+    <input type="hidden" name="last_tab" id="lastTabInput" value="{{ selected_tab }}">
+    <ul class="nav nav-tabs" id="configTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if selected_tab == 'geral' %}active{% endif %}" id="geral-tab" data-bs-toggle="tab" data-bs-target="#geral" type="button" role="tab">Geral</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if selected_tab == 'db' %}active{% endif %}" id="db-tab" data-bs-toggle="tab" data-bs-target="#db" type="button" role="tab">Banco de Dados</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if selected_tab == 'email' %}active{% endif %}" id="email-tab" data-bs-toggle="tab" data-bs-target="#email" type="button" role="tab">Email</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if selected_tab == 'seguranca' %}active{% endif %}" id="seguranca-tab" data-bs-toggle="tab" data-bs-target="#seguranca" type="button" role="tab">Segurança</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if selected_tab == 'empresa' %}active{% endif %}" id="empresa-tab" data-bs-toggle="tab" data-bs-target="#empresa" type="button" role="tab">Empresa</button>
+        </li>
+    </ul>
+
+    <div class="tab-content pt-3" id="configTabsContent">
+        <!-- Geral -->
+        <div class="tab-pane fade {% if selected_tab == 'geral' %}show active{% endif %}" id="geral" role="tabpanel">
+            <div class="mb-3">
+                <label class="form-label">Dia de Fechamento</label>
+                <input type="number" name="dia_fechamento" class="form-control" value="{{ config.get('dia_fechamento', '1') }}" min="1" max="31">
+                <div class="form-text">Dia do mês em que o período de ponto encerra.</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tipo de Fechamento</label>
+                <select name="tipo_fechamento" class="form-select">
+                    <option value="MES_ANTERIOR" {% if config.get('tipo_fechamento') != 'PROXIMO_MES' %}selected{% endif %}>
+                        Padrão (Mês Anterior/Atual) - Ex: 21/04 a 20/05 (Ref: Maio)
+                    </option>
+                    <option value="PROXIMO_MES" {% if config.get('tipo_fechamento') == 'PROXIMO_MES' %}selected{% endif %}>
+                        Avançado (Mês Atual/Próximo) - Ex: 21/05 a 20/06 (Ref: Maio)
+                    </option>
+                </select>
+                <div class="form-text">Define como o dia de fechamento é aplicado em relação ao mês de referência.</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tema UI</label>
+                <select name="ui_theme" class="form-select">
+                    <option value="light" {% if config.get('ui_theme') == 'light' %}selected{% endif %}>Claro</option>
+                    <option value="dark" {% if config.get('ui_theme') == 'dark' %}selected{% endif %}>Escuro</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Banco de Dados -->
+        <div class="tab-pane fade {% if selected_tab == 'db' %}show active{% endif %}" id="db" role="tabpanel">
+            <div class="mb-3">
+                <label class="form-label">Caminho do Banco (Apenas leitura)</label>
+                <input type="text" class="form-control" value="{{ db_path }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Diretório de Backup</label>
+                <input type="text" name="backup_dir" class="form-control" value="{{ config.get('backup_dir', '') }}">
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>Backups Disponíveis</h5>
+                <div class="d-flex gap-2">
+                    <!-- Form para upload fora do form principal para não submeter config -->
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Arquivo</th>
+                            <th>Data</th>
+                            <th>Tamanho</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for b in backups %}
+                        <tr>
+                            <td>{{ b.name }}</td>
+                            <td>{{ b.date }}</td>
+                            <td>{{ b.size }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-warning" 
+                                            onclick="if(confirm('ATENÇÃO: Isso irá substituir o banco atual pelo backup selecionado. Deseja continuar?')) submitAction('/admin/backup/restaurar', 'filename', '{{ b.name }}')">
+                                        Restaurar
+                                    </button>
+                                    <button type="button" class="btn btn-danger"
+                                            onclick="if(confirm('Deseja excluir este backup permanentemente?')) submitAction('/admin/backup/excluir', 'filename', '{{ b.name }}')">
+                                        Excluir
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">Nenhum backup encontrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Ações extras fora da tabela -->
+            <div class="card bg-light mt-3">
+                <div class="card-body">
+                    <h6 class="card-title">Ações Rápidas</h6>
+                    <div class="d-flex gap-2 flex-wrap">
+                         <button type="button" class="btn btn-success" onclick="submitSimple('/admin/backup/criar')">
+                            <i class="bi bi-plus-circle"></i> Criar Backup Agora
+                        </button>
+                        
+                        <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('uploadInput').click()">
+                            <i class="bi bi-upload"></i> Upload de Backup
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="tab-pane fade" id="email" role="tabpanel">
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <label class="form-label">SMTP Host</label>
+                    <input type="text" name="smtp_host" class="form-control" value="{{ config.get('smtp_host', 'localhost') }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">SMTP Port</label>
+                    <input type="number" name="smtp_port" class="form-control" value="{{ config.get('smtp_port', '25') }}">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Usuário SMTP</label>
+                <input type="text" name="smtp_user" class="form-control" value="{{ config.get('smtp_user', '') }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Senha SMTP</label>
+                <input type="password" name="smtp_pass" class="form-control" value="{{ config.get('smtp_pass', '') }}">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="notify_enabled" value="1" id="notifyCheck" {% if config.get('notify_enabled') == '1' %}checked{% endif %}>
+                <label class="form-check-label" for="notifyCheck">Habilitar Notificações</label>
+            </div>
+        </div>
+
+        <!-- Segurança -->
+        <div class="tab-pane fade" id="seguranca" role="tabpanel">
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="use_2fa" value="1" id="2faCheck" {% if config.get('use_2fa') == '1' %}checked{% endif %}>
+                <label class="form-check-label" for="2faCheck">Exigir 2FA</label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Max. Tentativas Login</label>
+                <input type="number" name="max_login_attempts" class="form-control" value="{{ config.get('max_login_attempts', '5') }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tempo de Bloqueio (minutos)</label>
+                <input type="number" name="lockout_minutes" class="form-control" value="{{ config.get('lockout_minutes', '15') }}">
+            </div>
+        </div>
+
+        <!-- Empresa -->
+        <div class="tab-pane fade" id="empresa" role="tabpanel">
+            <div class="mb-3">
+                <label class="form-label">Nome da Empresa</label>
+                <input type="text" name="empresa_nome" class="form-control" value="{{ config.get('empresa_nome', '') }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Endereço</label>
+                <textarea name="empresa_endereco" class="form-control" rows="3">{{ config.get('empresa_endereco', '') }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Salvar Configurações</button>
+    </div>
+</form>
+
+<!-- Forms ocultos para ações de backup -->
+<form id="actionForm" method="post" style="display:none;">
+    <input type="hidden" name="filename" id="actionFilename">
+</form>
+
+<form id="uploadForm" action="/admin/backup/upload" method="post" enctype="multipart/form-data" style="display:none;">
+    <input type="file" name="file" id="uploadInput" accept=".db" onchange="document.getElementById('uploadForm').submit()">
+</form>
+
+<script>
+function submitAction(url, paramName, paramValue) {
+    const form = document.getElementById('actionForm');
+    form.action = url;
+    document.getElementById('actionFilename').name = paramName;
+    document.getElementById('actionFilename').value = paramValue;
+    form.submit();
+}
+
+function submitSimple(url) {
+    const form = document.getElementById('actionForm');
+    form.action = url;
+    // Limpar params extras
+    document.getElementById('actionFilename').disabled = true; 
+    form.submit();
+}
+
+function sendTestEmail() {
+    const email = prompt("Digite o e-mail de destino para o teste:");
+    if (email) {
+        submitAction('/admin/config/test-email', 'to_email', email);
+    }
+
+// Atualizar hidden input quando trocar de aba
+var triggerTabList = [].slice.call(document.querySelectorAll('#configTabs button'))
+triggerTabList.forEach(function (triggerEl) {
+  triggerEl.addEventListener('shown.bs.tab', function (event) {
+    var targetId = event.target.getAttribute('data-bs-target').substring(1); // #geral -> geral
+    document.getElementById('lastTabInput').value = targetId;
+  })
+})
+}
+</script>
+{% endblock %}
